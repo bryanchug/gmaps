@@ -11,13 +11,21 @@
 	    <script>
 		    $(function(){
 			    var center = new google.maps.LatLng(8.488189, 124.653727);
-			    new google.maps.Map(
+			    var map = new google.maps.Map(
 				    document.getElementById('map-canvas'), {
 					    mapTypeId: google.maps.MapTypeId.ROADMAP,
 					    zoom: 8,
 					    center: center
 				    }
 			    );
+
+			    $('.map-link').click(function(e){
+				    e.preventDefault();
+				    var latitude = Number( $(this).data('latitude') );
+				    var longitude = Number( $(this).data('longitude') );
+				    var point = new google.maps.LatLng( latitude, longitude );
+				    map.setCenter( point );
+			    })
 		    });
 	    </script>
 	    <style>
@@ -70,6 +78,9 @@
 						    <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/tutorial">
 							    Google Maps JavaScript API v3
 						    </a>
+					    </li>
+					    <li>
+						    <a href="#" class="map-link btn btn-danger" data-latitude="8.488189" data-longitude="124.653727">Capitol University</a>
 					    </li>
 				    </ul>
 			    </div>
