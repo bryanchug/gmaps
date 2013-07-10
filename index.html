@@ -24,7 +24,7 @@
 				    var latitude = Number( $(this).data('latitude') );
 				    var longitude = Number( $(this).data('longitude') );
 				    var point = new google.maps.LatLng( latitude, longitude );
-				    map.setCenter( point );
+				    map.panTo( point );
 			    })
 		    });
 	    </script>
