@@ -8,6 +8,18 @@
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	    <script src="js/bootstrap.min.js"></script>
 	    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	    <script>
+		    $(function(){
+			    var center = new google.maps.LatLng(8.488189, 124.653727);
+			    new google.maps.Map(
+				    document.getElementById('map-canvas'), {
+					    mapTypeId: google.maps.MapTypeId.ROADMAP,
+					    zoom: 8,
+					    center: center
+				    }
+			    );
+		    });
+	    </script>
 	    <style>
 		    html, body{
 			    height: 100%;
