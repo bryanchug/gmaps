@@ -24,7 +24,12 @@
 				    new google.maps.LatLng(8.574232, 124.816833)
 			    );
 
+			    var directionsService = new google.maps.DirectionsService();
+			    var directionsDisplay = new google.maps.DirectionsRenderer();
+			    directionsDisplay.setMap( map );
+
 			    var activeInfoWindow;
+			    var previousPoint;
 
 			    //Close activeInfoWindow when map is clicked
 			    google.maps.event.addListener(map, 'click', function () {
@@ -56,6 +61,21 @@
 				    google.maps.event.addListener(marker, 'click', function () {
 					    openInfoWindow(infoWindow, marker);
 				    });
+
+
+				    if( previousPoint ){
+					    directionsService.route({
+							    origin: previousPoint,
+							    destination: point,
+							    travelMode: google.maps.DirectionsTravelMode.DRIVING
+					        }, function(response, status) {
+							    if (status == google.maps.DirectionsStatus.OK) {
+								    directionsDisplay.setDirections(response);
+							    }
+						    });
+				    }
+
+				    previousPoint = point;
 
 				    return {marker:marker, infoWindow:infoWindow};
 			    }
