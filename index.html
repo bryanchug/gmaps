@@ -19,6 +19,16 @@
 				    }
 			    );
 
+			    var activeInfoWindow;
+
+			    function openInfoWindow(infoWindow, marker) {
+				    if( activeInfoWindow ){
+					    activeInfoWindow.close();
+				    }
+				    infoWindow.open(map, marker);
+				    activeInfoWindow = infoWindow;
+			    }
+
 			    $('.map-link').click(function(e){
 				    e.preventDefault();
 				    
@@ -29,23 +39,30 @@
 				    var point = new google.maps.LatLng( latitude, longitude );
 				    map.panTo( point );
 
-				    if( !$mapLink.data('marker') ){
+				    var marker = $mapLink.data('marker');
+				    var infoWindow = $mapLink.data('infoWindow');
 
-					    var marker = new google.maps.Marker({
+				    if( !marker ){
+
+					    marker = new google.maps.Marker({
 						    map: map,
 						    position: point
 					    });
-
-					    var infoWindow = new google.maps.InfoWindow({
-						    content: $mapLink.text()
-					    });
-
-					    google.maps.event.addListener(marker, 'click', function () {
-						    infoWindow.open(map, marker);
-					    });
-
 					    $mapLink.data('marker', marker);
 
+					    infoWindow = new google.maps.InfoWindow({
+						    content: $mapLink.text()
+					    });
+					    $mapLink.data('infoWindow', infoWindow);
+
+					    google.maps.event.addListener(marker, 'click', function () {
+						    openInfoWindow(infoWindow, marker);
+					    });
+
+				    }
+
+				    if( infoWindow ){
+					    openInfoWindow(infoWindow, marker);
 				    }
 
 			    });
