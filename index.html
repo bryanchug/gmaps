@@ -21,6 +21,13 @@
 
 			    var activeInfoWindow;
 
+			    //Close activeInfoWindow when map is clicked
+			    google.maps.event.addListener(map, 'click', function () {
+				    if( activeInfoWindow ){
+					    activeInfoWindow.close();
+				    }
+			    });
+
 			    function openInfoWindow(infoWindow, marker) {
 				    if( activeInfoWindow ){
 					    activeInfoWindow.close();
