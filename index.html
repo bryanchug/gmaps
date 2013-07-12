@@ -36,6 +36,25 @@
 				    activeInfoWindow = infoWindow;
 			    }
 
+			    function addPoint(point, name) {
+				    var marker = new google.maps.Marker({
+					    map:map,
+					    position:point,
+					    icon:'/img/map-marker.png'
+				    });
+
+				    var infoWindow = new google.maps.InfoWindow({
+					    content: name
+				    });
+
+				    google.maps.event.addListener(marker, 'click', function () {
+					    openInfoWindow(infoWindow, marker);
+				    });
+
+				    return {marker:marker, infoWindow:infoWindow};
+			    }
+
+			    //Map link click handler:
 			    $('.map-link').click(function(e){
 				    e.preventDefault();
 				    
@@ -49,24 +68,10 @@
 				    var marker = $mapLink.data('marker');
 				    var infoWindow = $mapLink.data('infoWindow');
 
-				    if( !marker ){
-
-					    marker = new google.maps.Marker({
-						    map: map,
-						    position: point,
-						    icon: '/img/map-marker.png'
-					    });
-					    $mapLink.data('marker', marker);
-
-					    infoWindow = new google.maps.InfoWindow({
-						    content: $mapLink.text()
-					    });
-					    $mapLink.data('infoWindow', infoWindow);
-
-					    google.maps.event.addListener(marker, 'click', function () {
-						    openInfoWindow(infoWindow, marker);
-					    });
-
+				    if( !marker ) {
+					    var _addPointResult = addPoint(point, $mapLink.text());
+					    marker = _addPointResult.marker;
+					    infoWindow = _addPointResult.infoWindow;
 				    }
 
 				    if( infoWindow ){
