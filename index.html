@@ -26,10 +26,13 @@
 				    var point = new google.maps.LatLng( latitude, longitude );
 				    map.panTo( point );
 
-				    new google.maps.Marker({
-					    map: map,
-					    position: point
-				    });
+				    if( !$(this).data('marker') ){
+					    var marker = new google.maps.Marker({
+						    map: map,
+						    position: point
+					    });
+					    $(this).data('marker', marker);
+				    }
 			    })
 		    });
 	    </script>
