@@ -19,6 +19,10 @@
 				    }
 			    );
 			    var placesService = new google.maps.places.PlacesService(map);
+			    var cityBounds = new google.maps.LatLngBounds(
+				    new google.maps.LatLng(8.253624, 124.454284),
+				    new google.maps.LatLng(8.574232, 124.816833)
+			    );
 
 			    var activeInfoWindow;
 
@@ -90,18 +94,23 @@
 
 				    placesService.textSearch({
 					        location: map.getCenter(),
-					        radius: '500',
+					        radius: 500,
 					    	query: address
 					    }, function(results, status){
 						    if (status == google.maps.places.PlacesServiceStatus.OK) {
 							    var result = results[0];
-							    var _addPointResult = addPoint( result.geometry.location, result.name );
-							    var marker = _addPointResult.marker;
-							    var infoWindow = _addPointResult.infoWindow;
-							    openInfoWindow( infoWindow, marker );
-						    }else{
-							    alert('Not found');
+							    var location = result.geometry.location;
+
+							    if( cityBounds.contains(location) ){
+								    var _addPointResult = addPoint( location, result.name );
+								    var marker = _addPointResult.marker;
+								    var infoWindow = _addPointResult.infoWindow;
+								    openInfoWindow( infoWindow, marker );
+								    return;
+							    }
 						    }
+
+						    alert('Not found');
 					    });
 
 			    });
