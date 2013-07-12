@@ -25,6 +25,11 @@
 				    var longitude = Number( $(this).data('longitude') );
 				    var point = new google.maps.LatLng( latitude, longitude );
 				    map.panTo( point );
+
+				    new google.maps.Marker({
+					    map: map,
+					    position: point
+				    });
 			    })
 		    });
 	    </script>
