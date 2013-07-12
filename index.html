@@ -21,19 +21,34 @@
 
 			    $('.map-link').click(function(e){
 				    e.preventDefault();
-				    var latitude = Number( $(this).data('latitude') );
-				    var longitude = Number( $(this).data('longitude') );
+				    
+				    var $mapLink = $(this);
+				    
+				    var latitude = Number( $mapLink.data('latitude') );
+				    var longitude = Number( $mapLink.data('longitude') );
 				    var point = new google.maps.LatLng( latitude, longitude );
 				    map.panTo( point );
 
-				    if( !$(this).data('marker') ){
+				    if( !$mapLink.data('marker') ){
+
 					    var marker = new google.maps.Marker({
 						    map: map,
 						    position: point
 					    });
-					    $(this).data('marker', marker);
+
+					    var infoWindow = new google.maps.InfoWindow({
+						    content: $mapLink.text()
+					    });
+
+					    google.maps.event.addListener(marker, 'click', function () {
+						    infoWindow.open(map, marker);
+					    });
+
+					    $mapLink.data('marker', marker);
+
 				    }
-			    })
+
+			    });
 		    });
 	    </script>
 	    <style>
